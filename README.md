@@ -20,7 +20,8 @@ I also made a script to update nomi-sec's PoC in GitHub repo
 
 <code>python3 searchPoC/updatePoC.py</code>
 
-Example:
+Usage Example:
+
 Clone both repos to the same directory
 
 ![image](https://github.com/user-attachments/assets/e0ed4911-c7e0-45c8-91eb-08f0b8fb31e8)
