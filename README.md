@@ -17,16 +17,18 @@ Instructions
 <code>python3 searchPoC/searchPoC.py <CVEs seperated by spaces or commas> </code>
 
 I also made a script to update nomi-sec's PoC in GitHub repo
-<code>python3 searchPoC/updatePoC.py</code>
 
-<code>python3 updatePoC.py</code>
+<code>python3 searchPoC/updatePoC.py</code>
 
 Example:
 Clone both repos to the same directory
+
 ![image](https://github.com/user-attachments/assets/e0ed4911-c7e0-45c8-91eb-08f0b8fb31e8)
 
 Example with CVEs passed as arg
-![image](https://github.com/user-attachments/assets/2d77a0a7-d0e0-4f71-aa2a-6bca9db5105a)
+
+![image](https://github.com/user-attachments/assets/12363bf2-4a86-4bd1-9b3d-b9018dcc7740)
 
 Example with CVEs inputed after prompt
-![image](https://github.com/user-attachments/assets/092ac885-20e9-49c1-82f1-85b47f728928)
+
+![image](https://github.com/user-attachments/assets/27766c90-a36f-48cc-9a38-62a25c91c34d)
