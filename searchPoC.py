@@ -1,5 +1,3 @@
-# Search GitHub for PoC with CVE by xp101t
-
 import os
 import json
 import re
@@ -21,9 +19,7 @@ def search_pocs(cve_list, base_dir):
                         try:
                             data = json.load(json_file)
                             if isinstance(data, list):
-                                # Check each item in the list
                                 html_urls = [item.get("html_url") for item in data if isinstance(item, dict)]
-                                # If multiple urls, you might want to pick one or handle differently
                                 found_pocs[file_cve] = html_urls[0] if html_urls else None
                             elif isinstance(data, dict):
                                 found_pocs[file_cve] = data.get("html_url")
@@ -34,13 +30,30 @@ def search_pocs(cve_list, base_dir):
     
     return found_pocs
 
+def find_base_dir(base_dir_name='PoC-in-GitHub'):
+    possible_dirs = [
+        os.path.join(os.getcwd(), base_dir_name),
+        os.path.join(os.getcwd(), '..', base_dir_name),
+        os.path.join(os.getcwd(), '..', '..', base_dir_name)
+    ]
+    
+    for directory in possible_dirs:
+        if os.path.isdir(directory):
+            return directory
+    
+    return None
+
 def main(cve_input=None):
-    base_dir = 'PoC-in-GitHub'  # Change this if the repo is in a different location
+    base_dir = find_base_dir()
+    
+    if base_dir is None:
+        print(f"Error: Directory 'PoC-in-GitHub' not found in the current or parent directories.")
+        return
     
     if cve_input is None:
-        cve_input = input("Enter CVEs separated by commas: ")
+        cve_input = input("Enter CVEs separated by spaces or commas: ")
     
-    cve_list = [cve.strip() for cve in cve_input.split(',') if is_valid_cve(cve.strip())]
+    cve_list = [cve.strip() for cve in re.split(r'[,\s]+', cve_input) if is_valid_cve(cve.strip())]
     
     if not cve_list:
         print("No valid CVEs provided.")
@@ -59,8 +72,7 @@ def main(cve_input=None):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        cve_input = ','.join(sys.argv[1:])
+        cve_input = ' '.join(sys.argv[1:])
         main(cve_input)
     else:
         main()
-
