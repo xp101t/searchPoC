@@ -1,3 +1,5 @@
+# Search GitHub for PoC with CVE by xp101t
+
 import os
 import json
 import re
@@ -20,11 +22,21 @@ def search_pocs(cve_list, base_dir):
                             data = json.load(json_file)
                             if isinstance(data, list):
                                 html_urls = [item.get("html_url") for item in data if isinstance(item, dict)]
-                                found_pocs[file_cve] = html_urls[0] if html_urls else None
+                                descriptions = [item.get("description") for item in data if isinstance(item, dict)]
+                                found_pocs[file_cve] = {
+                                    "html_url": html_urls[0] if html_urls else None,
+                                    "description": descriptions[0] if descriptions else None
+                                }
                             elif isinstance(data, dict):
-                                found_pocs[file_cve] = data.get("html_url")
+                                found_pocs[file_cve] = {
+                                    "html_url": data.get("html_url"),
+                                    "description": data.get("description")
+                                }
                             else:
-                                found_pocs[file_cve] = None
+                                found_pocs[file_cve] = {
+                                    "html_url": None,
+                                    "description": None
+                                }
                         except json.JSONDecodeError:
                             print(f"Error decoding JSON for {file_cve}")
     
@@ -62,11 +74,13 @@ def main(cve_input=None):
     pocs = search_pocs(cve_list, base_dir)
     
     if pocs:
-        for cve, url in pocs.items():
-            if url:
-                print(f"\033[1;35mFound PoC for {cve}:\033[0m {url}")
-            else:
-                print(f"\033[1;33mFound PoC for {cve}, but 'html_url' is missing.\033[0m")
+        for cve, info in pocs.items():
+            print()
+            description = info['description'] if info['description'] else "Description not available"
+            html_url = info['html_url'] if info['html_url'] else "URL not available"
+            
+            print(f"\033[91m{cve}\033[0m: {description}")
+            print(html_url)
     else:
         print("No PoCs found for the given CVEs.")
 

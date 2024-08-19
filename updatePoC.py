@@ -32,18 +32,35 @@ def update_repo(repo_path):
     # Pull the latest changes from the remote branch
     run_command('git pull')
 
+def find_repo(base_dir_name='PoC-in-GitHub'):
+    """Search for the repository in the current and previous directories."""
+    possible_dirs = [
+        os.path.join(os.getcwd(), base_dir_name),
+        os.path.join(os.getcwd(), '..', base_dir_name),
+        os.path.join(os.getcwd(), '..', '..', base_dir_name),
+        os.path.join(os.getcwd(), '..', '..', '..', base_dir_name)
+    ]
+    
+    for directory in possible_dirs:
+        if os.path.isdir(directory):
+            return directory
+    
+    return None
+
 def main():
     repo_url = "https://github.com/nomi-sec/PoC-in-GitHub"
     repo_name = repo_url.split('/')[-1]
-    repo_path = os.path.join(os.getcwd(), repo_name)
+    
+    # Search for the repository in the current and previous directories
+    repo_path = find_repo(repo_name)
 
-    # Check if the repository directory exists
-    if os.path.isdir(repo_path):
+    if repo_path:
         update_repo(repo_path)
     else:
         print(f"Cloning repository from {repo_url}...")
-        # Clone the repository if it does not exist
+        # Clone the repository if it does not exist in any of the searched directories
         run_command(f'git clone {repo_url}')
+        repo_path = os.path.join(os.getcwd(), repo_name)
         update_repo(repo_path)
 
 if __name__ == "__main__":
