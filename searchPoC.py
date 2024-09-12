@@ -141,7 +141,7 @@ def main(cve_input=None):
         return
     
     if cve_input is None:
-        cve_input = input("Enter CVEs separated by spaces or commas: ")
+        cve_input = input("\nEnter CVEs separated by spaces or commas: ")
     
     cve_list = [cve.strip() for cve in re.split(r'[,\s]+', cve_input) if is_valid_cve(cve.strip())]
     
@@ -152,7 +152,7 @@ def main(cve_input=None):
     pocs, not_returned_cves = search_pocs(cve_list, base_dir)
     
     if pocs:
-        print("GitHub POCs found:")
+        print("---------------------------------------------------------------------------------\nPoC('s) found:")
         for cve, info in pocs.items():
             print()
             description = info['description'] if info['description'] else "Description not available"
@@ -166,7 +166,7 @@ def main(cve_input=None):
             print(html_url)
     
     if not_returned_cves:
-        print("\nGitHub flagged as remediation/detection/null description:")
+        print("---------------------------------------------------------------------------------\nPotential false positive(s), description flagged remediation/detection/null:\n")
         for cve in not_returned_cves:
             print(f"\033[91m{cve}\033[0m")
 
