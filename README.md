@@ -4,7 +4,7 @@ Search GitHub for PoC with CVE by xp101t
 Vuln scans can output hundreds of CVEs, I made this tool to quickly learn which CVEs have PoCs on GitHub.
 
 Instructions
-1. Clone PoC in GitHub repo, not mine, all credit to nomi-sec
+1. Clone nomi-sec's PoC in GitHub repo
 
 1. Clone repo
 
