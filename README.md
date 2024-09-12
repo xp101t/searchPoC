@@ -6,8 +6,6 @@ Vuln scans can output hundreds of CVEs, I made this tool to quickly learn which 
 Instructions
 1. Clone nomi-sec's PoC in GitHub repo
 
-1. Clone repo
-
 <code>git clone https://github.com/xp101t/searchPoC.git</code>
 
 2. Clone/update nomi-sec's "PoC-in-GitHub" repo
